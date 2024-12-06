@@ -1,7 +1,7 @@
 names = ['Max', 'Bruce', 'Tony']
 age = [22,21,23]
 
-combination = list(zip(names, age))
+combination = (zip(names, age))
 
 print(combination)
 
