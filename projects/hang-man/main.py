@@ -4,8 +4,6 @@ def user_input():
   words =  ["python", "developer", "hangman", "programming", "challenge"]
   words_length = len(words)
 
-  selected = ''
-
   while True:
     try:
       random_choice = int(input(f"Please select a number between 1 and {words_length}: "))
@@ -28,28 +26,25 @@ def hangman():
 
   while attempts > 0 and "_" in guessed_word:
     guess = input("Enter a letter: ").lower()
-
+    
     if len(guess) != 1 or not guess.isalpha():
-      print("Invalid input. Please enter a valid single letter")
+      print("Invalid input. Please enter a single letter.")
       continue
-
-    guessed_word.append(guess)
 
     if guess in input_result:
       print(f'Yay! Good guess! The letter "{guess}" is in the word.')
-      for idx, letter in enumerate(word):
+      for idx, letter in enumerate(input_result):  # Iterate over the original word
         if letter == guess:
-          guessed_word[idx] = guess
-
+          guessed_word[idx] = guess  # Update the placeholder list
     else:
       attempts -= 1
-      print(f"Wrong guess. You have {attempts} attempts left.")
+      print(f'Oops! The letter "{guess}" is not in the word. Attempts left: {attempts}')
     
     print("Current word:", " ".join(guessed_word))
 
   if '_' not in guessed_word:
-    return print(f'Congratulations! You\'ve guessed the word: {word}')
+    return print(f'Congratulations! You\'ve guessed the word: {input_result}')
   else:
-    print(f"Game over! The word was: {word}")
+    print(f"Game over! The word was: {input_result}")
 
 hangman()
