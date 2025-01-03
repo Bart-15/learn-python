@@ -13,7 +13,7 @@ def transform_audio_into_text():
   #set microphone
   with sr.Microphone() as source:
     print('Listening...')
-    r.pause_threshold = 1
+    r.pause_threshold = 0.8
     audio = r.listen(source)
 
 
@@ -21,7 +21,7 @@ def transform_audio_into_text():
 
     try:
       #search on google
-      request = r.recognize_google(audio, language='en-us')
+      request = r.recognize_google(audio, language='en')
 
       # Test in text
       print('You said: ' + request)
@@ -60,7 +60,7 @@ def ask_time():
   speak(f'At this moment it is{time}')
 
 def initial_greeting():
-  speak('Hello, I am your virtual assistant. How can I help you today?')
+  speak('Hello my name is Mira, I am your virtual assistant. How can I help you today?')
 
 
 def my_assistant():
@@ -70,7 +70,7 @@ def my_assistant():
   go_on = True
 
   while go_on:
-    my_req = transform_audio_into_text()
+    my_req = transform_audio_into_text().lower()
 
     if 'open youtube' in my_req:
       speak('Opening Youtube')
@@ -119,6 +119,7 @@ def my_assistant():
       }
 
       stock = yf.Ticker(share)
+      continue
 
       try:
         searched_stock = portfolio[share]
@@ -129,7 +130,8 @@ def my_assistant():
       except:
         speak('I am sorry, I could not find the stock you requested')
         continue
-    elif 'exit' or 'goodbye' in my_req:
+    elif 'goodbye' in my_req:
       speak('Goodbye, let me know if you need anything else. Have a great day!')
-      go_on = False
+      break   
+
 my_assistant()  
